@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dashboard extends MY_Controller {
+class Kelas extends MY_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -24,13 +24,14 @@ class Dashboard extends MY_Controller {
      * @method __construct
      */
 
-	protected $title = 'Dashboard';
-	protected $module = 'dashboard';
+	protected $title = 'Kelas';
+	protected $module = 'kelas';
 
     public function __construct()
     {
         // Load the constructer from MY_Controller
         parent::__construct();
+		$this->load->model('M_Umum','umum');
     }
 
     /**
@@ -42,7 +43,8 @@ class Dashboard extends MY_Controller {
      */
 	public function index()
 	{
-        $this->title = 'Dashboard';
+        $this->title = 'Kelas';
+		$kelas = $this->umum->get_data('kelas')->result();
 		$this->render('index',get_defined_vars());
 	}
 	

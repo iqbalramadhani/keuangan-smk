@@ -8,7 +8,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Gentelella Alela! | </title>
+	<title>Login</title>
 
 	<!-- Bootstrap -->
 	<link href="<?= base_url(); ?>assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -31,16 +31,16 @@
 		<div class="login_wrapper">
 			<div class="animate form login_form">
 				<section class="login_content">
-					<form>
+					<?= form_open(base_url('auth')) ?>
 						<h1>Login Form</h1>
 						<div>
-							<input type="text" class="form-control" placeholder="Username" required="" />
+							<input type="text" name="username" class="form-control" placeholder="Username" required="" />
 						</div>
 						<div>
-							<input type="password" class="form-control" placeholder="Password" required="" />
+							<input type="password" name="password" class="form-control" placeholder="Password" required="" />
 						</div>
 						<div>
-							<a class="btn btn-default submit" href="index.html">Log in</a>
+							<input type="submit" name="submit" value="Log in" class="btn btn-default submit">
 							<a class="reset_pass" href="#">Lost your password?</a>
 						</div>
 

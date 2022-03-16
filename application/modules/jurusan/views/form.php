@@ -39,7 +39,32 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
-						<button class="btn btn-primary btn-lg" id="tambah-data">Tambah Data</button>
+						<button type="button" class="btn btn-primary btn-lg" id="back" onclick="window.location.href = '<?= base_url($module); ?>'">Kembali</button>
+						<?= form_open(base_url($module.'/save'),array('class'=>'form-horizontal form-label-left')) ?>
+							<div class="item form-group">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="">Nama Jurusan <span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" name="nama_jurusan" id="" required="required" class="form-control ">
+								</div>
+							</div>
+							<div class="item form-group">
+								<label class="col-form-label col-md-3 col-sm-3 label-align" for="">Kode Jurusan <span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 ">
+									<input type="text" name="kode_jurusan" id="" required="required" class="form-control ">
+								</div>
+							</div>
+							
+							<div class="ln_solid"></div>
+							<div class="item form-group">
+								<div class="col-md-6 col-sm-6 offset-md-3">
+=									<button class="btn btn-primary" type="reset">Reset</button>
+									<button type="submit" class="btn btn-success">Kirim</button>
+								</div>
+							</div>
+
+						</form>
 					</div>
 				</div>
 			</div>

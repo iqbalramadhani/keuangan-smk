@@ -28,6 +28,8 @@ class Auth extends MY_Controller
 	{
 		// Load the constructer from MY_Controller
 		parent::__construct();
+		$this->load->model('M_Auth','auth');
+		$this->load->model('M_Umum','umum');
 	}
 
 	/**
@@ -39,43 +41,21 @@ class Auth extends MY_Controller
 	 */
 	public function index()
 	{
-		//
+		if(isset($_POST['submit'])){
+			$username = $this->input->post('username');
+			$cek_user = $this->umum->get_where('user',['username'=>$username]);
+			if($cek_user->num_rows()>0){
+				$data_user = $cek_user->row_array();
+				if(hash_verified($this->input->post('password'),$data_user['password'])){
+					$this->session->set_userdata($data_user);
+					redirect('dashboard');
+
+				}
+			}
+			// dd(var_dump(hash_verified('admin','$2y$05$9AcH394kH.hSeVmPfKqxD.N.rj8XIeh7Iywv7IBaxvo/C4Pxpn4Li')));
+			// dd(get_hash($this->input->post('password')));
+		}
 		$this->load->view('auth/login');
 	}
 
-	public function css(){
-		$this->load->view('auth/css');
-	}
-
-	public function cetak_value($value=''){
-		var_dump($value);
-	}
-
-	public function ambil_kata($kalimat="(23 Maret 2018) Some string is below here (please note below): The dummy formula is a=(x+y)-100."){
-		$kurung = true;
-		$mulai=0;
-		while($kurung){
-			$cari_kurung = strpos($kalimat,'(',$mulai);
-			if($cari_kurung !== false){
-				$kata = true;
-				$kalimat_baru = '';
-				$no = 1;
-				while($kata){
-					if($kalimat[$cari_kurung+$no] == ')'){
-						$kalimat_baru .= '<br>';
-						$mulai = $cari_kurung+$no;
-						break;
-					}
-					$kalimat_baru .= $kalimat[$cari_kurung+$no];
-					$no++;
-				}
-				print_r($kalimat_baru);
-			}else{
-				break;
-			}
-		}
-	}
 }
-
-$auth = new Auth;
-// $auth->ambil_kata("(23 Maret 2018) Some string is below here (please note below): The dummy formula is a=(x+y)-100.");

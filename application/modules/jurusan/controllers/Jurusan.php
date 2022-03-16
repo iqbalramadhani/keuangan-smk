@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dashboard extends MY_Controller {
+class Jurusan extends MY_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -24,8 +24,8 @@ class Dashboard extends MY_Controller {
      * @method __construct
      */
 
-	protected $title = 'Dashboard';
-	protected $module = 'dashboard';
+	protected $title = 'Jurusan';
+	protected $module = 'jurusan';
 
     public function __construct()
     {
@@ -42,7 +42,8 @@ class Dashboard extends MY_Controller {
      */
 	public function index()
 	{
-        $this->title = 'Dashboard';
+        $this->title = 'Jurusan';
+		$list_jurusan = $this->umum->get_data('jurusan')->result();
 		$this->render('index',get_defined_vars());
 	}
 	
@@ -50,5 +51,14 @@ class Dashboard extends MY_Controller {
 	{
         $this->title = 'Form Data';
 		$this->render('form',get_defined_vars());
+	}
+
+	public function save(){
+		$data_jurusan = [
+			'nama_jurusan' => $this->input->post('nama_jurusan',true),
+			'kode_jurusan' => $this->input->post('kode_jurusan',true),
+		];
+		$umum = $this->umum->insert('jurusan',$this->input->post());
+		redirect('jurusan');
 	}
 }

@@ -47,8 +47,11 @@ class MY_Controller extends MX_Controller
     }
 
     public function render($view,$data=null){
-        $this->load->view('template/header',['title' => $this->title]);
-        $this->load->view($view,$data);
+        $data['title'] =  $this->title;
+        $data['module'] = $this->module;
+        $this->load->view('template/header',$data);
+        $this->load->view($this->module.'/css');
+        $this->load->view($this->module.'/'.$view,$data);
         $this->load->view('template/footer');
     }
 

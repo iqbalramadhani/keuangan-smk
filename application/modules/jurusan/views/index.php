@@ -23,6 +23,7 @@
 			<div class="col-md-12 col-sm-12  ">
 				<div class="x_panel">
 					<div class="x_title">
+						<h2>Plain Page</h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 							</li>
@@ -40,6 +41,26 @@
 					</div>
 					<div class="x_content">
 						<button class="btn btn-primary btn-lg" id="tambah-data">Tambah Data</button>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>No</th>
+									<th>Nama Jurusan</th>
+									<th>Kode Jurusan</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach ($list_jurusan as $key => $list) { ?>
+									<tr>
+										<td><?= $key; ?></td>
+										<td><?= $list->nama_jurusan; ?></td>
+										<td><?= $list->kode_jurusan; ?></td>
+									</tr>
+								<?php
+								}
+								?>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
