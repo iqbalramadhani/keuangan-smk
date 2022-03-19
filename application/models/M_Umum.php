@@ -71,13 +71,4 @@ class M_Umum extends CI_Model
                return false;
           }
      }
-
-     public function login($param)
-     {
-          $this->db->select('*');
-          $this->db->from('pengguna');
-          $this->db->where('username', $param);
-          $this->db->or_where('email', $param);
-          return $this->db->get();
-     }
 }

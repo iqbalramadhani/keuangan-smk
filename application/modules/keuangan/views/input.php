@@ -1,3 +1,5 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <div class="right_col" role="main">
 	<div class="">
 		<div class="page-title">
@@ -23,7 +25,6 @@
 			<div class="col-md-12 col-sm-12  ">
 				<div class="x_panel">
 					<div class="x_title">
-						<h2>Plain Page</h2>
 						<ul class="nav navbar-right panel_toolbox">
 							<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
 							</li>
@@ -42,28 +43,19 @@
 					<div class="x_content">
 						<button class="btn btn-primary btn-lg" id="tambah-data">Tambah Data</button>
 						<br>
-						<table class="table col-md-5">
+						<table class="table mt-3">
 							<thead>
 								<tr>
-									<td>No</td>
-									<td>Kelas</td>
-									<td>Aksi</td>
+									<th>NIS</th>
+									<th>Nama</th>
+									<th>Kelas</th>
+									<th>Bulan</th>
+									<th>Tanggal Bayar</th>
+									<th>Nominal</th>
 								</tr>
 							</thead>
 							<tbody>
-								<?php foreach ($kelas as $key => $class) :
-								?>
-									<tr>
-										<td><?= $key + 1; ?></td>
-										<td><?= $class->tingkat . '-' . $class->kode_jurusan . '-' . $class->kelas; ?></td>
-										<td>
-											<a href="<?= base_url('kelas/form/' . encode_arr($class->id_kelas)); ?>" class="btn btn-warning">Ubah</a>
-											<a href="<?= base_url('kelas/hapus/' . encode_arr($class->id_kelas)); ?>" class="btn btn-danger" onclick="return confirm('Akan menghapus data ini ?')">Hapus</a>
-										</td>
-									</tr>
-								<?php
-								endforeach;
-								?>
+								
 							</tbody>
 						</table>
 					</div>

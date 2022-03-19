@@ -31,6 +31,9 @@ class Dashboard extends MY_Controller {
     {
         // Load the constructer from MY_Controller
         parent::__construct();
+		if($this->session->userdata('id_user') == ''){
+			redirect('auth');
+		}
     }
 
     /**

@@ -52,6 +52,7 @@ class MY_Controller extends MX_Controller
         $this->load->view('template/header',$data);
         $this->load->view($this->module.'/css');
         $this->load->view($this->module.'/'.$view,$data);
+        $this->load->view($this->module.'/js');
         $this->load->view('template/footer');
     }
 

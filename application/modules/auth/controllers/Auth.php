@@ -58,4 +58,9 @@ class Auth extends MY_Controller
 		$this->load->view('auth/login');
 	}
 
+	public function logout(){
+		$this->session->sess_destroy();
+		redirect('atuh');
+	}
+
 }

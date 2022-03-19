@@ -48,9 +48,32 @@ class Kelas extends MY_Controller {
 		$this->render('index',get_defined_vars());
 	}
 	
-	public function form()
+	public function form($id=null)
 	{
         $this->title = 'Form Data';
+		if(!is_null($id)){
+			$kelas = $this->umum->get_where('kelas',['id_kelas'=>decode_arr($id)])->row();
+		}
+		$jurusan = $this->umum->get_data('jurusan')->result();
 		$this->render('form',get_defined_vars());
+	}
+
+	public function save($id=null)
+	{
+		$data = $this->input->post();
+		if(!is_null($id)){
+			$save = $this->umum->update('kelas',$this->input->post(),['id_kelas'=>decode_arr($id)]);
+		}else{
+			$save = $this->umum->insert('kelas',$this->input->post());
+		}
+		if($save){
+			redirect($this->module);
+		}
+		
+	}
+
+	public function hapus($id){
+		$this->umum->delete('kelas',['id_kelas' => decode_arr($id)]);
+		redirect($this->module);
 	}
 }

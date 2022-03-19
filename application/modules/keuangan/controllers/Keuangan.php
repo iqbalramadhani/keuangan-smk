@@ -1,6 +1,7 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class Keuangan extends MY_Controller {
+class Keuangan extends MY_Controller
+{
 
 	/**
 	 * Index Page for this controller.
@@ -18,30 +19,67 @@ class Keuangan extends MY_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 
-    /**
-     * [__construct description]
-     *
-     * @method __construct
-     */
+	/**
+	 * [__construct description]
+	 *
+	 * @method __construct
+	 */
 
-	protected $title = 'Dashboard';
+	protected $title = 'Keuangan';
+	protected $module = 'keuangan';
 
-    public function __construct()
-    {
-        // Load the constructer from MY_Controller
-        parent::__construct();
-    }
+	public function __construct()
+	{
+		// Load the constructer from MY_Controller
+		parent::__construct();
+	}
 
-    /**
-     * [index description]
-     *
-     * @method index
-     *
-     * @return [type] [description]
-     */
+	/**
+	 * [index description]
+	 *
+	 * @method index
+	 *
+	 * @return [type] [description]
+	 */
 	public function index()
 	{
-        $this->title = 'Dashboard';
-		$this->load->view('keuangan/index',get_defined_vars());
+		$this->title = 'Dashboard';
+		$this->load->view('keuangan/index', get_defined_vars());
+	}
+
+	public function input()
+	{
+		$this->title = 'Keuangan';
+		$pembayaran = $this->umum->get_data('pembayaran')->result();
+		$this->render('input', get_defined_vars());
+	}
+
+	public function form($id=null){
+		$kelas = $this->umum->get_data('kelas')->result();
+		$this->render('form',get_defined_vars());
+	}
+
+	public function save($id=null){
+		$this->db->trans_begin();
+		$data = $this->input->post();
+		$save = [];
+		foreach($data['nis'] as $key => $val){
+			$save[] = [
+				'kelas' => $data['kelas'],
+				'nama_siswa' => $data['nama'][$key],
+				'nis' => $val,
+				'tanggal_bayar' => date('Y-m-d',strtotime($data['tgl_bayar'][$key])),
+				'nominal' => str_replace(['.',','],'',$data['nominal'][$key]),
+				'bulan' => $data['bulan'][$key]
+			];
+		}
+
+		$insert = $this->umum->multi_insert('pembayaran',$save);
+		if($insert){
+			$this->db->trans_commit();
+		}else{
+			$this->db->trans_roll();
+		}
+	
 	}
 }

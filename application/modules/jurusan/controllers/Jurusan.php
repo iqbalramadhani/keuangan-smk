@@ -1,6 +1,7 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class Jurusan extends MY_Controller {
+class Jurusan extends MY_Controller
+{
 
 	/**
 	 * Index Page for this controller.
@@ -18,47 +19,65 @@ class Jurusan extends MY_Controller {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
 	 */
 
-    /**
-     * [__construct description]
-     *
-     * @method __construct
-     */
+	/**
+	 * [__construct description]
+	 *
+	 * @method __construct
+	 */
 
 	protected $title = 'Jurusan';
 	protected $module = 'jurusan';
 
-    public function __construct()
-    {
-        // Load the constructer from MY_Controller
-        parent::__construct();
-    }
+	public function __construct()
+	{
+		// Load the constructer from MY_Controller
+		parent::__construct();
+	}
 
-    /**
-     * [index description]
-     *
-     * @method index
-     *
-     * @return [type] [description]
-     */
+	/**
+	 * [index description]
+	 *
+	 * @method index
+	 *
+	 * @return [type] [description]
+	 */
 	public function index()
 	{
-        $this->title = 'Jurusan';
+		$this->title = 'Jurusan';
 		$list_jurusan = $this->umum->get_data('jurusan')->result();
-		$this->render('index',get_defined_vars());
-	}
-	
-	public function form()
-	{
-        $this->title = 'Form Data';
-		$this->render('form',get_defined_vars());
+		$this->render('index', get_defined_vars());
 	}
 
-	public function save(){
-		$data_jurusan = [
-			'nama_jurusan' => $this->input->post('nama_jurusan',true),
-			'kode_jurusan' => $this->input->post('kode_jurusan',true),
-		];
-		$umum = $this->umum->insert('jurusan',$this->input->post());
+	public function form($id = null)
+	{
+		if (!is_null($id)) {
+			$jurusan = $this->umum->get_where('jurusan', ['id_jurusan' => decode_arr($id)])->row();
+		}
+		$this->title = 'Form Data';
+		$this->render('form', get_defined_vars());
+	}
+
+	public function save($id = null)
+	{
+		$data = $this->input->post();
+		$this->db->trans_begin();
+		if (!is_null($id)){
+			$aksi = $this->umum->update(
+				'jurusan', 
+				['nama_jurusan'=>$data['nama_jurusan'],'kode_jurusan'=>$data['kode_jurusan']], 
+				['id_jurusan' => decode_arr($id)]);
+
+			$aksi = $this->umum->update(
+				'kelas',
+				['kode_jurusan'=>$data['kode_jurusan']], 
+				['kode_jurusan' => $data['kode_jurusan_old']]
+			);
+		}
+		else $aksi = $this->umum->insert('jurusan', ['nama_jurusan'=>$data['nama_jurusan'],'kode_jurusan'=>$data['kode_jurusan']]);
+
+		if ($aksi) $this->db->trans_commit();
+		else $this->db->trans_rollback();
+
 		redirect('jurusan');
 	}
 }

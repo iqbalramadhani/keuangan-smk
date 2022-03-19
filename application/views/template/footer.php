@@ -17,15 +17,7 @@
 	<script src="<?= base_url() ?>assets/vendors/nprogress/nprogress.js"></script>
 	<!-- Custom Theme Scripts -->
 	<script src="<?= base_url() ?>assets/build/js/custom.min.js"></script>
-
-	<?php
-	if (isset($js)) {
-		foreach ($js as $jss) {
-	?>
-	<?php
-		}
-	}
-	?>
+	<script src="<?= base_url() ?>assets/src/js/herper.js"></script>
 
 
 	<script>

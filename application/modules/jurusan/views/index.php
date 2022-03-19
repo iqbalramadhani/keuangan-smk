@@ -47,14 +47,18 @@
 									<th>No</th>
 									<th>Nama Jurusan</th>
 									<th>Kode Jurusan</th>
+									<th>Aksi</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php foreach ($list_jurusan as $key => $list) { ?>
 									<tr>
-										<td><?= $key; ?></td>
+										<td><?= $key+1; ?></td>
 										<td><?= $list->nama_jurusan; ?></td>
 										<td><?= $list->kode_jurusan; ?></td>
+										<td>
+											<a href="<?= base_url($module.'/form/'.encode_arr($list->id_jurusan)); ?>" class="btn btn-warning">Ubah</a>
+										</td>
 									</tr>
 								<?php
 								}
@@ -67,6 +71,3 @@
 		</div>
 	</div>
 </div>
-<?php
-$this->load->view('dashboard/js.php');
-?>
