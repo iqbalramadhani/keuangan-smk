@@ -1,4 +1,9 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
+ defined('BASEPATH') or exit('No direct script access allowed');
 
 /**
  * CodeIgniter-HMVC
@@ -24,6 +29,7 @@ class MY_Controller extends MX_Controller
      * view, layout,....
      */
     protected $data = array();
+    protected $allow;
 
     /**
      * [__construct description]
@@ -36,14 +42,8 @@ class MY_Controller extends MX_Controller
         parent::__construct();
 
         $CI =& get_instance();
+        date_default_timezone_set("Asia/Jakarta");
 
-        // Copyright year calculation for the footer
-        $begin = 2019;
-        $end =  date("Y");
-        $date = "$begin - $end";
-
-        // Copyright
-        $this->data['copyright'] = $date;
     }
 
     public function render($view,$data=null){

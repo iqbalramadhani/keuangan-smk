@@ -1,5 +1,8 @@
 <?php
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 if (!function_exists('cetak')) {
   function cetak($str)
   {
@@ -430,4 +433,45 @@ function decrypt_img($signature, $image_file)
   } else {
     echo 'An error occurred.';
   }
+}
+
+function tgl_indo($tanggal)
+{
+  $bulan = array(
+    1 =>   'Januari',
+    'Februari',
+    'Maret',
+    'April',
+    'Mei',
+    'Juni',
+    'Juli',
+    'Agustus',
+    'September',
+    'Oktober',
+    'November',
+    'Desember'
+  );
+  $pecahkan = explode('-', $tanggal);
+
+  return $pecahkan[2] . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[0];
+}
+
+function rupiah($nominal)
+{
+  return 'Rp. <span style="text-align:right;">' . number_format($nominal, 0, ',', '.') . '</span>';
+}
+
+function cek_jwt()
+{
+  $CI = get_instance();
+  try {
+    JWT::decode($CI->session->userdata('token'), new Key(PUBLIC_KEY_JWT, 'HS256'));
+  } catch (\Throwable $th) {
+    redirect('auth');
+  }
+}
+
+function jwt(){
+  $CI = get_instance();
+  return JWT::decode($CI->session->userdata('token'), new Key(PUBLIC_KEY_JWT, 'HS256'));
 }

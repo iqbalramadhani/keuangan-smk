@@ -21,44 +21,52 @@
 
 	<!-- Custom Theme Style -->
 	<link href="<?= base_url(); ?>assets/build/css/custom.min.css" rel="stylesheet">
+
+	<style>
+		.judul {
+			margin-bottom: -10px;
+		}
+	</style>
 </head>
 
 <body class="login">
 	<div>
+		<h1 class="text-center judul mt-5">SMKN 2 PEMATANG SIANTAR</h1>
 		<a class="hiddenanchor" id="signup"></a>
 		<a class="hiddenanchor" id="signin"></a>
-
 		<div class="login_wrapper">
 			<div class="animate form login_form">
 				<section class="login_content">
+					<?php if(!empty($this->session->flashdata('info'))){ ?>
+						<div class="alert alert-danger alert-dismissible fade show" role="alert">
+							Username atau Password salah
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+					<?php } ?>
 					<?= form_open(base_url('auth')) ?>
-						<h1>Login Form</h1>
-						<div>
-							<input type="text" name="username" class="form-control" placeholder="Username" required="" />
-						</div>
-						<div>
-							<input type="password" name="password" class="form-control" placeholder="Password" required="" />
-						</div>
-						<div>
-							<input type="submit" name="submit" value="Log in" class="btn btn-default submit">
-							<a class="reset_pass" href="#">Lost your password?</a>
-						</div>
+					<h1>Login Form</h1>
+					<div>
+						<input type="text" name="username" class="form-control" placeholder="Username" required="" />
+					</div>
+					<div>
+						<input type="password" name="password" class="form-control" placeholder="Password" required="" />
+					</div>
+					<div>
+						<input type="submit" name="submit" value="Log in" class="btn btn-default submit">
+						<a class="reset_pass" href="#">Lost your password?</a>
+					</div>
 
+					<div class="clearfix"></div>
+
+					<div class="separator">
 						<div class="clearfix"></div>
+						<br />
 
-						<div class="separator">
-							<p class="change_link">New to site?
-								<a href="#signup" class="to_register"> Create Account </a>
-							</p>
-
-							<div class="clearfix"></div>
-							<br />
-
-							<div>
-								<h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-								<p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
-							</div>
+						<div>
 						</div>
+					</div>
 					</form>
 				</section>
 			</div>
@@ -92,7 +100,7 @@
 
 							<div>
 								<h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-								<p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+
 							</div>
 						</div>
 					</form>
@@ -100,6 +108,13 @@
 			</div>
 		</div>
 	</div>
+	<div class="fixed-bottom text-center">
+		<p>©2022 SMKN 2 PEMATANG SIANTAR</p>
+	</div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>

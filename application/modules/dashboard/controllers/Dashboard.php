@@ -1,5 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 class Dashboard extends MY_Controller {
 
 	/**
@@ -31,9 +34,7 @@ class Dashboard extends MY_Controller {
     {
         // Load the constructer from MY_Controller
         parent::__construct();
-		if($this->session->userdata('id_user') == ''){
-			redirect('auth');
-		}
+		cek_jwt();
     }
 
     /**

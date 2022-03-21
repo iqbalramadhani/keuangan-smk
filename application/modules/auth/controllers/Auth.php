@@ -1,5 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
+use Firebase\JWT\JWT;
+
 class Auth extends MY_Controller
 {
 
@@ -47,20 +49,23 @@ class Auth extends MY_Controller
 			if($cek_user->num_rows()>0){
 				$data_user = $cek_user->row_array();
 				if(hash_verified($this->input->post('password'),$data_user['password'])){
-					$this->session->set_userdata($data_user);
+					$jwt = JWT::encode($data_user,PUBLIC_KEY_JWT,'HS256');
+					$this->session->set_userdata(['token'=>$jwt]);
+					$this->umum->insert('log_table',['id_log'=>date('dmYHis'),'jenis'=>'Login','pesan'=>'user login']);
 					redirect('dashboard');
 
 				}
+			}else{
+				$this->session->set_flashdata('info','Usernamd atau Passowrd salah');
 			}
-			// dd(var_dump(hash_verified('admin','$2y$05$9AcH394kH.hSeVmPfKqxD.N.rj8XIeh7Iywv7IBaxvo/C4Pxpn4Li')));
-			// dd(get_hash($this->input->post('password')));
 		}
 		$this->load->view('auth/login');
 	}
 
 	public function logout(){
+		$this->umum->insert('log_table',['id_log'=>date('dmYHis'),'jenis'=>'Login','pesan'=>'user logout']);
 		$this->session->sess_destroy();
-		redirect('atuh');
+		redirect('auth');
 	}
 
 }

@@ -22,6 +22,10 @@
 
 	<script>
 		let current_location = window.location.href
+
+		setTimeout(function(){
+            $('.alert').alert('close');
+        },5000);
 	</script>
 	</body>
 

@@ -32,6 +32,7 @@ class Jurusan extends MY_Controller
 	{
 		// Load the constructer from MY_Controller
 		parent::__construct();
+		cek_jwt();
 	}
 
 	/**
@@ -53,7 +54,7 @@ class Jurusan extends MY_Controller
 		if (!is_null($id)) {
 			$jurusan = $this->umum->get_where('jurusan', ['id_jurusan' => decode_arr($id)])->row();
 		}
-		$this->title = 'Form Data';
+		$this->title = 'Form Jurusan';
 		$this->render('form', get_defined_vars());
 	}
 
@@ -72,11 +73,15 @@ class Jurusan extends MY_Controller
 				['kode_jurusan'=>$data['kode_jurusan']], 
 				['kode_jurusan' => $data['kode_jurusan_old']]
 			);
-		}
-		else $aksi = $this->umum->insert('jurusan', ['nama_jurusan'=>$data['nama_jurusan'],'kode_jurusan'=>$data['kode_jurusan']]);
+		}else $aksi = $this->umum->insert('jurusan', ['nama_jurusan'=>$data['nama_jurusan'],'kode_jurusan'=>$data['kode_jurusan']]);
 
-		if ($aksi) $this->db->trans_commit();
-		else $this->db->trans_rollback();
+		if ($aksi) {
+			$this->session->set_flashdata('info',[true,'Data berhasil disimpan']);
+			$this->db->trans_commit();
+		}else{
+			$this->session->set_flashdata('info',[false,'Data gagal disimpan']);
+			$this->db->trans_rollback();
+		} 
 
 		redirect('jurusan');
 	}

@@ -31,6 +31,7 @@ class Kelas extends MY_Controller {
     {
         // Load the constructer from MY_Controller
         parent::__construct();
+		cek_jwt();
 		$this->load->model('M_Umum','umum');
     }
 
@@ -60,20 +61,34 @@ class Kelas extends MY_Controller {
 
 	public function save($id=null)
 	{
-		$data = $this->input->post();
+		$this->db->trans_begin();
 		if(!is_null($id)){
 			$save = $this->umum->update('kelas',$this->input->post(),['id_kelas'=>decode_arr($id)]);
 		}else{
 			$save = $this->umum->insert('kelas',$this->input->post());
 		}
-		if($save){
-			redirect($this->module);
-		}
+
+		if ($save) {
+			$this->session->set_flashdata('info',[true,'Data berhasil disimpan']);
+			$this->db->trans_commit();
+		}else{
+			$this->session->set_flashdata('info',[false,'Data gagal disimpan']);
+			$this->db->trans_rollback();
+		} 
 		
+		redirect($this->module);
 	}
 
 	public function hapus($id){
-		$this->umum->delete('kelas',['id_kelas' => decode_arr($id)]);
+		$this->db->trans_begin();
+		$delete = $this->umum->delete('kelas',['id_kelas' => decode_arr($id)]);
+		if($delete){
+			$this->session->set_flashdata('info',[true,'Data berhasil dihapus']);
+			$this->db->trans_commit();
+		}else{
+			$this->session->set_flashdata('info',[false,'Data gagal dihapus']);
+			$this->db->trans_rollback();
+		}
 		redirect($this->module);
 	}
 }

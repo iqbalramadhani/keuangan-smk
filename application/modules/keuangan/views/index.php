@@ -8,7 +8,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Gentelella Alela! | </title>
+	<title>Laporan Keuangan</title>
 
 	<!-- Bootstrap -->
 	<link href="<?= base_url() ?>assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -25,7 +25,7 @@
 	<div class="container body">
 		<div class="main_container">
 			<!-- page content -->
-			<div class="right_col p-5" role="" style="min-height: 700px;">
+			<div class="right_col p-5" role="" style="min-height: 900px;">
 				<div class="d-flex justify-content-end">.
 					<a href="<?= base_url('auth'); ?>" class="btn btn-primary">Login User</a>
 				</div>
@@ -60,8 +60,6 @@
 											</form>
 										</div>
 									</div>
-
-
 									<div id="spp" style="align-content: center;font-size: 20px;" class="data-spp">
 										<div class="card">
 											<div class="card-header">
@@ -139,190 +137,90 @@
 		$('#spp').hide();
 		$('.data-spp').hide();
 
+		function base_url() {
+			var pathparts = location.pathname.split('/');
+			if (location.host == 'localhost') {
+				var url = location.origin + '/' + pathparts[1].trim('/') + '/';
+			} else {
+				var url = location.origin + '/';
+			}
+			return url;
+		}
+
 		$(document).ready(function() {
-
-
-			let data = [{
-					'nis': '1234',
-					'nama': 'Zhafirah',
-					'kelas': 'XII-AK-1',
-					'jurusan': 'Analis Kimia',
-					'transaksi': [{
-							'bulan': "Januari",
-							'tanggal_bayar': '1 Januari 2021',
-							'nominal': '75.000',
-							'status': 'Sudah Bayar'
-						},
-						{
-							'bulan': "Februari",
-							'tanggal_bayar': '3 Februaru 2021',
-							'nominal': '75.000',
-							'status': 'Sudah Bayar'
-						},
-						{
-							'bulan': "Maret",
-							'tanggal_bayar': '1 Maret 2021',
-							'nominal': '75.000',
-							'status': 'Sudah Bayar'
-						},
-						{
-							'bulan': "Aptril",
-							'tanggal_bayar': '1 April 2021',
-							'nominal': '75.000',
-							'status': 'Sudah Bayar'
-						},
-						{
-							'bulan': "Mei",
-							'tanggal_bayar': '1 Mei 2021',
-							'nominal': '75.000',
-							'status': 'Belum Bayar'
-						},
-						{
-							'bulan': "Juni",
-							'tanggal_bayar': '1 Juni 2021',
-							'nominal': '',
-							'status': 'Belum Bayar'
-						},
-						{
-							'bulan': "Juli",
-							'tanggal_bayar': '1 Juli 2021',
-							'nominal': '',
-							'status': 'Belum Bayar'
-						},
-						{
-							'bulan': "Agustus",
-							'tanggal_bayar': '1 Agustus 2021',
-							'nominal': '',
-							'status': 'Belum Bayar'
-						},
-					]
-				},
-				{
-					'nis': '2134',
-					'nama': 'Wahid',
-					'kelas': 'XII-TKJ-1',
-					'jurusan': 'TKJ',
-					'transaksi': [{
-							'bulan': "Januari",
-							'tanggal_bayar': '1 Januari 2021',
-							'nominal': '75.000',
-							'status': 'Sudah Bayar'
-						},
-						{
-							'bulan': "Februari",
-							'tanggal_bayar': '3 Februaru 2021',
-							'nominal': '75.000',
-							'status': 'Sudah Bayar'
-						},
-						{
-							'bulan': "Maret",
-							'tanggal_bayar': '1 Maret 2021',
-							'nominal': '75.000',
-							'status': 'Sudah Bayar'
-						},
-						{
-							'bulan': "Aptril",
-							'tanggal_bayar': '1 Aptril 2021',
-							'nominal': '75.000',
-							'status': 'Sudah Bayar'
-						},
-					]
-				},
-				{
-					'nis': '3142',
-					'nama': 'Fauzan',
-					'kelas': 'XII-RPL-1',
-					'jurusan': 'Rekayasa Perangkat Lunak',
-					'transaksi': [{
-							'bulan': "Januari",
-							'tanggal_bayar': '1 Januari 2021',
-							'nominal': '75.000',
-							'status': 'Sudah Bayar'
-						},
-						{
-							'bulan': "Februari",
-							'tanggal_bayar': '3 Februaru 2021',
-							'nominal': '75.000',
-							'status': 'Sudah Bayar'
-						},
-						{
-							'bulan': "Maret",
-							'tanggal_bayar': '1 Maret 2021',
-							'nominal': '75.000',
-							'status': 'Sudah Bayar'
-						},
-						{
-							'bulan': "Aptril",
-							'tanggal_bayar': '1 Aptril 2021',
-							'nominal': '75.000',
-							'status': 'Sudah Bayar'
-						},
-					]
-				},
-				{
-					'nis': '4123',
-					'nama': 'Izana',
-					'kelas': 'XII-TKJ-1',
-					'jurusan': 'Teknik Komputer Jaringan',
-					'transaksi': [{
-							'bulan': "Januari",
-							'tanggal_bayar': '1 Januari 2021',
-							'nominal': '75.000',
-							'status': 'Sudah Bayar'
-						},
-						{
-							'bulan': "Februari",
-							'tanggal_bayar': '3 Februaru 2021',
-							'nominal': '75.000',
-							'status': 'Sudah Bayar'
-						},
-						{
-							'bulan': "Maret",
-							'tanggal_bayar': '1 Maret 2021',
-							'nominal': '75.000',
-							'status': 'Sudah Bayar'
-						},
-						{
-							'bulan': "Aptril",
-							'tanggal_bayar': '1 Aptril 2021',
-							'nominal': '75.000',
-							'status': 'Sudah Bayar'
-						},
-					]
-				}
-			];
 
 			$('#form-search').submit(function(e) {
 				$('.footer_fixed').removeClass('footer_fixed');
 				e.preventDefault();
 				$('.data-spp').hide();
+
 				let nis = $('#data-nis').val();
-				$.each(data, function(key, val) {
-					if (val.nis.toLowerCase() == nis.toLowerCase() || val.nama.toLowerCase() == nis.toLowerCase()) {
-						let table = '';
-						$('#spp-nama').html(val.nama);
-						$('#spp-nis').html(val.nis);
-						$('#spp-jurusan').html(val.jurusan);
-						$('#spp-kelas').html(val.kelas);
-						$.each(val.transaksi, function(keys, values) {
-							table += `<tr>
-								<td>${values.bulan}</td>
-								<td>${values.tanggal_bayar}</td>
-								<td>${values.nominal != '' ? 'Rp. '+values.nominal : '-'}</td>
-								<td><span class="badge badge-${values.status == 'Belum Bayar' ? 'danger' : 'success'}">${values.status}</span></td>
-							</tr>`
-						});
-						$('#spp-content').html(table);
-						$('#spp').show();
-						return false;
+
+				$.ajax({
+					url: base_url() + 'keuangan/search/' + nis,
+					method: 'GET',
+					dataType : 'JSON',
+					success: function(data) {
+						if(data.status){
+							console.log('lebih')
+							let table = '';
+							$('#spp-nama').html(data.data[0].nama_siswa);
+							$('#spp-nis').html(data.data[0].nis);
+							$('#spp-jurusan').html(data.data[0].jurusan);
+							$('#spp-kelas').html(data.data[0].kelas);
+							$.each(data.data, function(keys, values) {
+								table += `<tr>
+											<td>${values.bulan}</td>
+											<td>${values.tanggal_bayar}</td>
+											<td>${values.nominal != '' ? 'Rp. '+values.nominal : '-'}</td>
+											<td><span class="badge badge-success">Sudah Bayar</span></td>
+										</tr>`
+							});
+							$('#spp-content').html(table);
+							$('#spp').show();
+						}else{
+							console.log('kurang')
+
+							$('#spp').hide();
+							$('#alert-nis').html(nis);
+							$('#alert-search').show();
+						}
+					},
+					error: function(xhr) {
+						console.log('error ' + xhr)
 					}
-					$('#spp').hide();
-					$('#alert-nis').html(nis);
-					$('#alert-search').show();
 				});
 
-			});
+				// $('#spp').hide();
+				// $('#alert-nis').html(nis);
+				// $('#alert-search').show();
 
+				
+				// $.each(data, function(key, val) {
+				// 	if (val.nis.toLowerCase() == nis.toLowerCase() || val.nama.toLowerCase() == nis.toLowerCase()) {
+				// 		let table = '';
+				// 		$('#spp-nama').html(val.nama);
+				// 		$('#spp-nis').html(val.nis);
+				// 		$('#spp-jurusan').html(val.jurusan);
+				// 		$('#spp-kelas').html(val.kelas);
+				// 		$.each(val.transaksi, function(keys, values) {
+				// 			table += `<tr>
+				// 				<td>${values.bulan}</td>
+				// 				<td>${values.tanggal_bayar}</td>
+				// 				<td>${values.nominal != '' ? 'Rp. '+values.nominal : '-'}</td>
+				// 				<td><span class="badge badge-${values.status == 'Belum Bayar' ? 'danger' : 'success'}">${values.status}</span></td>
+				// 			</tr>`
+				// 		});
+				// 		$('#spp-content').html(table);
+				// 		$('#spp').show();
+				// 		return false;
+				// 	}
+				// 	$('#spp').hide();
+				// 	$('#alert-nis').html(nis);
+				// 	$('#alert-search').show();
+				// });
+
+			});
 		});
 	</script>
 </body>
