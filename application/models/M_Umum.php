@@ -12,7 +12,7 @@ class M_Umum extends CI_Model
      public function insert($table, $data, $last_id = false)
      {
           $data['created_at'] = date('Y-m-d H:i:s');
-          $data['created_by'] = $this->session->userdata('id_user');
+          $data['created_by'] = jwt()->id_user;
 
           $this->db->insert($table, $data, true);
           if ($this->db->affected_rows() > 0) {
@@ -58,7 +58,7 @@ class M_Umum extends CI_Model
      public function update($table, $data, $where)
      {
           $data['updated_at'] = date('Y-m-d H:i:s');
-          $data['updated_by'] = $this->session->userdata('id_user');
+          $data['updated_by'] = jwt()->id_user;
 
           $query  = $this->db->update($table, $data, $where, true);
           if ($query) {

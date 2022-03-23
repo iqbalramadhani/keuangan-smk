@@ -32,7 +32,7 @@ class Keuangan extends MY_Controller
 	{
 		// Load the constructer from MY_Controller
 		parent::__construct();
-		if (current_url() != base_url()) {
+		if (current_url() != base_url() && $this->uri->segment(2) != 'search') {
 			cek_jwt();
 		}
 		$this->load->model('M_Keuangan', 'keuangan');
@@ -68,20 +68,38 @@ class Keuangan extends MY_Controller
 	{
 		$this->db->trans_begin();
 		$data = $this->input->post();
-		$save = [];
-		foreach ($data['nis'] as $key => $val) {
-			$save[] = [
-				'kelas' => $data['kelas'],
-				'nama_siswa' => $data['nama'][$key],
-				'nis' => $val,
-				'tanggal_bayar' => date('Y-m-d', strtotime($data['tgl_bayar'][$key])),
-				'nominal' => str_replace(['.', ','], '', $data['nominal'][$key]),
-				'bulan' => $data['bulan'][$key]
-			];
+		print_r($data);
+		if($data['tipe_check'] == 'import'){
+			$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($_FILES['file']['tmp_name']);
+			$excel = $spreadsheet->getSheet(0)->toArray();
+			unset($excel[0]);
+			foreach($excel as $exc){
+				$save[] = [
+					'kelas' => $data['kelas'],
+					'nama_siswa' => $exc[1],
+					'nis' => $exc[2],
+					'tanggal_bayar' => date('Y-m-d', strtotime($exc[4])),
+					'nominal' => $exc[5],
+					'bulan' => idx_tgl_indo($exc[3])
+				];
+			}
+		}else{
+			$save = [];
+			foreach ($data['nis'] as $key => $val) {
+				$save[] = [
+					'kelas' => $data['kelas'],
+					'nama_siswa' => $data['nama'][$key],
+					'nis' => $val,
+					'tanggal_bayar' => date('Y-m-d', strtotime($data['tgl_bayar'][$key])),
+					'nominal' => str_replace(['.', ','], '', $data['nominal'][$key]),
+					'bulan' => $data['bulan'][$key]
+				];
+			}
 		}
 
 		$insert = $this->umum->multi_insert('pembayaran', $save);
 		if ($insert) {
+			$this->umum->insert('log_table',['id_log'=>date('dmYHis'),'jenis'=>'Input Pembayaran','pesan'=>'Input Pembayaran SPP']);
 			$this->session->set_flashdata('info', [true, 'Data berhasil disimpan']);
 			$this->db->trans_commit();
 		} else {

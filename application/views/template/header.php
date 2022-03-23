@@ -11,17 +11,18 @@
 	<title><?= $title; ?></title>
 
 	<!-- Bootstrap -->
-	<link href="<?= base_url() ?>assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
 	<!-- Font Awesome -->
-	<link href="<?= base_url() ?>assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 	<!-- NProgress -->
-	<link href="<?= base_url() ?>assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.css">
 
 	<!-- Custom Theme Style -->
 	<link href="<?= base_url() ?>assets/build/css/custom.min.css" rel="stylesheet">
 
 	<!-- jQuery -->
-	<script src="<?= base_url() ?>assets/vendors/jquery/dist/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
 
 
 </head>
@@ -60,10 +61,10 @@
 									<a href="<?= base_url('dashboard'); ?>"><i class="fa fa-home"></i>Dashboard<span class="label label-success pull-right"></span></a>
 								</li>
 								<li>
-									<a href="<?= base_url('kelas'); ?>"><i class="fa fa-home"></i>Kelas<span class="label label-success pull-right"></span></a>
+									<a href="<?= base_url('jurusan'); ?>"><i class="fa fa-home"></i>Jurusan<span class="label label-success pull-right"></span></a>
 								</li>
 								<li>
-									<a href="<?= base_url('jurusan'); ?>"><i class="fa fa-home"></i>Jurusan<span class="label label-success pull-right"></span></a>
+									<a href="<?= base_url('kelas'); ?>"><i class="fa fa-home"></i>Kelas<span class="label label-success pull-right"></span></a>
 								</li>
 								<li>
 									<a href="<?= base_url('keuangan/input'); ?>"><i class="fa fa-home"></i>Keuangan<span class="label label-success pull-right"></span></a>

@@ -11,13 +11,14 @@
 	<title>Login</title>
 
 	<!-- Bootstrap -->
-	<link href="<?= base_url(); ?>assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
 	<!-- Font Awesome -->
-	<link href="<?= base_url(); ?>assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 	<!-- NProgress -->
-	<link href="<?= base_url(); ?>assets/vendors/nprogress/nprogress.css" rel="stylesheet">
-	<!-- Animate.css -->
-	<link href="<?= base_url(); ?>assets/vendors/animate.css/animate.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.css">
+
+	<!-- Custom Theme Style -->
+	<link href="<?= base_url() ?>assets/build/css/custom.min.css" rel="stylesheet">
 
 	<!-- Custom Theme Style -->
 	<link href="<?= base_url(); ?>assets/build/css/custom.min.css" rel="stylesheet">
@@ -46,16 +47,16 @@
 						</div>
 					<?php } ?>
 					<?= form_open(base_url('auth')) ?>
-					<h1>Login Form</h1>
+					<h1>Login User</h1>
 					<div>
 						<input type="text" name="username" class="form-control" placeholder="Username" required="" />
 					</div>
 					<div>
 						<input type="password" name="password" class="form-control" placeholder="Password" required="" />
 					</div>
-					<div>
-						<input type="submit" name="submit" value="Log in" class="btn btn-default submit">
-						<a class="reset_pass" href="#">Lost your password?</a>
+					<div class="text-center">
+						<input type="submit" name="submit" value="Log in" class="btn btn-primary submit">
+						<button type="button" onclick="location.href='<?= base_url(); ?>'" class="btn btn-success">Kembali</button>
 					</div>
 
 					<div class="clearfix"></div>

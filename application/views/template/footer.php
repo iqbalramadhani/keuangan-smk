@@ -10,11 +10,11 @@
 	</div>
 
 	<!-- Bootstrap -->
-	<script src="<?= base_url() ?>assets/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- FastClick -->
-	<script src="<?= base_url() ?>assets/vendors/fastclick/lib/fastclick.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.0/fastclick.js"></script>
 	<!-- NProgress -->
-	<script src="<?= base_url() ?>assets/vendors/nprogress/nprogress.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.js"></script>
 	<!-- Custom Theme Scripts -->
 	<script src="<?= base_url() ?>assets/build/js/custom.min.js"></script>
 	<script src="<?= base_url() ?>assets/src/js/herper.js"></script>

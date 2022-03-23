@@ -73,9 +73,14 @@ class Jurusan extends MY_Controller
 				['kode_jurusan'=>$data['kode_jurusan']], 
 				['kode_jurusan' => $data['kode_jurusan_old']]
 			);
-		}else $aksi = $this->umum->insert('jurusan', ['nama_jurusan'=>$data['nama_jurusan'],'kode_jurusan'=>$data['kode_jurusan']]);
+			$pesan = 'Update Jurusan';
+		}else{
+			$aksi = $this->umum->insert('jurusan', ['nama_jurusan'=>$data['nama_jurusan'],'kode_jurusan'=>$data['kode_jurusan']]);
+			$pesan = 'Insert Pesan';
+		} 
 
 		if ($aksi) {
+			$this->umum->insert('log_table',['id_log'=>date('dmYHis'),'jenis'=>'Update Jurusan','pesan'=>$pesan]);
 			$this->session->set_flashdata('info',[true,'Data berhasil disimpan']);
 			$this->db->trans_commit();
 		}else{

@@ -456,6 +456,26 @@ function tgl_indo($tanggal)
   return $pecahkan[2] . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[0];
 }
 
+function idx_tgl_indo($tgl)
+{
+  $bulan = array(
+    'Januari'  => 1,
+    'Februari' => 2,
+    'Maret'    => 3,
+    'April'    => 4,
+    'Mei'      => 5,
+    'Juni'     => 6,
+    'Juli'     => 7,
+    'Agustus'  => 8,
+    'September'=> 9,
+    'Oktober'  => 10,
+    'November' => 11,
+    'Desember' => 12
+  );
+
+  return $bulan[$tgl];
+}
+
 function rupiah($nominal)
 {
   return 'Rp. <span style="text-align:right;">' . number_format($nominal, 0, ',', '.') . '</span>';

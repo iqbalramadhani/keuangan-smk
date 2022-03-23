@@ -42,5 +42,20 @@
             $('#'+$(this).data('row')).remove();
         });
 
+        $(document).on('click','.form-check-input',function(){
+            $('.input-form').hide();
+            let id = $(this).data('id');
+            if(id=='manual'){
+                $('.manual-required').attr('required',true);
+                $('.import-required').attr('required',false);
+                $('#inlineRadio1').prop(true);
+            }else{
+                $('.manual-required').attr('required',false);
+                $('.import-required').attr('required',true)
+                $('#inlineRadio2').prop(true);
+            }
+            $('#'+id).show();
+        });
+
     });
 </script>

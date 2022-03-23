@@ -69,6 +69,7 @@ class Kelas extends MY_Controller {
 		}
 
 		if ($save) {
+			$this->umum->insert('log_table',['id_log'=>date('dmYHis'),'jenis'=>'Update Kelas','pesan'=>'Perubahan Data Kelas']);
 			$this->session->set_flashdata('info',[true,'Data berhasil disimpan']);
 			$this->db->trans_commit();
 		}else{

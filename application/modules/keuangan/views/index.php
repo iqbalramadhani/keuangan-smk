@@ -11,11 +11,11 @@
 	<title>Laporan Keuangan</title>
 
 	<!-- Bootstrap -->
-	<link href="<?= base_url() ?>assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
 	<!-- Font Awesome -->
-	<link href="<?= base_url() ?>assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 	<!-- NProgress -->
-	<link href="<?= base_url() ?>assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.css">
 
 	<!-- Custom Theme Style -->
 	<link href="<?= base_url() ?>assets/build/css/custom.min.css" rel="stylesheet">
@@ -123,13 +123,13 @@
 	</div>
 
 	<!-- jQuery -->
-	<script src="<?= base_url() ?>assets/vendors/jquery/dist/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<!-- Bootstrap -->
-	<script src="<?= base_url() ?>assets/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- FastClick -->
-	<script src="<?= base_url() ?>assets/vendors/fastclick/lib/fastclick.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fastclick/0.6.0/fastclick.js"></script>
 	<!-- NProgress -->
-	<script src="<?= base_url() ?>assets/vendors/nprogress/nprogress.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.js"></script>
 
 	<!-- Custom Theme Scripts -->
 	<script src="build/js/custom.min.js"></script>
