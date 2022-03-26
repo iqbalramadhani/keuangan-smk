@@ -20,6 +20,8 @@
 	<!-- Custom Theme Style -->
 	<link href="<?= base_url() ?>assets/build/css/custom.min.css" rel="stylesheet">
 
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
 	<!-- jQuery -->
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
@@ -61,35 +63,19 @@
 									<a href="<?= base_url('dashboard'); ?>"><i class="fa fa-home"></i>Dashboard<span class="label label-success pull-right"></span></a>
 								</li>
 								<li>
-									<a href="<?= base_url('jurusan'); ?>"><i class="fa fa-home"></i>Jurusan<span class="label label-success pull-right"></span></a>
+									<a href="<?= base_url('jurusan'); ?>"><i class="fa fa-file-text-o"></i>Jurusan<span class="label label-success pull-right"></span></a>
 								</li>
 								<li>
-									<a href="<?= base_url('kelas'); ?>"><i class="fa fa-home"></i>Kelas<span class="label label-success pull-right"></span></a>
+									<a href="<?= base_url('kelas'); ?>"><i class="fa fa-list-alt"></i>Kelas<span class="label label-success pull-right"></span></a>
 								</li>
 								<li>
-									<a href="<?= base_url('keuangan/input'); ?>"><i class="fa fa-home"></i>Keuangan<span class="label label-success pull-right"></span></a>
+									<a href="<?= base_url('keuangan/input'); ?>"><i class="fa fa-money"></i>Keuangan<span class="label label-success pull-right"></span></a>
 								</li>
 							</ul>
 						</div>
 					</div>
 					<!-- /sidebar menu -->
 
-					<!-- /menu footer buttons -->
-					<div class="sidebar-footer hidden-small">
-						<a data-toggle="tooltip" data-placement="top" title="Settings">
-							<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-						</a>
-						<a data-toggle="tooltip" data-placement="top" title="FullScreen">
-							<span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-						</a>
-						<a data-toggle="tooltip" data-placement="top" title="Lock">
-							<span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-						</a>
-						<a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-							<span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-						</a>
-					</div>
-					<!-- /menu footer buttons -->
 				</div>
 			</div>
 

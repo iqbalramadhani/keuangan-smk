@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd88696e2a4603cee166fc79f1fcedfd8
+class ComposerStaticInit79c1e610e7a3545952eda4d8a53bcc8c
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
@@ -24,7 +24,6 @@ class ComposerStaticInitd88696e2a4603cee166fc79f1fcedfd8
         ),
         'W' => 
         array (
-            'Whoops\\' => 7,
             'Webmozart\\Assert\\' => 17,
         ),
         'S' => 
@@ -38,9 +37,9 @@ class ComposerStaticInitd88696e2a4603cee166fc79f1fcedfd8
         'P' => 
         array (
             'Psr\\SimpleCache\\' => 16,
-            'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Http\\Client\\' => 16,
+            'Prophecy\\' => 9,
             'PhpOffice\\PhpSpreadsheet\\' => 25,
         ),
         'M' => 
@@ -69,16 +68,12 @@ class ComposerStaticInitd88696e2a4603cee166fc79f1fcedfd8
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
         ),
         'ZipStream\\' => 
         array (
             0 => __DIR__ . '/..' . '/maennchen/zipstream-php/src',
-        ),
-        'Whoops\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/filp/whoops/src/Whoops',
         ),
         'Webmozart\\Assert\\' => 
         array (
@@ -108,18 +103,18 @@ class ComposerStaticInitd88696e2a4603cee166fc79f1fcedfd8
         array (
             0 => __DIR__ . '/..' . '/psr/simple-cache/src',
         ),
-        'Psr\\Log\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
-        ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
+        ),
+        'Prophecy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpspec/prophecy/src/Prophecy',
         ),
         'PhpOffice\\PhpSpreadsheet\\' => 
         array (
@@ -164,14 +159,7 @@ class ComposerStaticInitd88696e2a4603cee166fc79f1fcedfd8
         array (
             'org\\bovigo\\vfs' => 
             array (
-                0 => __DIR__ . '/..' . '/mikey179/vfsStream/src/main/php',
-            ),
-        ),
-        'P' => 
-        array (
-            'Prophecy\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
+                0 => __DIR__ . '/..' . '/mikey179/vfsstream/src/main/php',
             ),
         ),
         'H' => 
@@ -661,10 +649,10 @@ class ComposerStaticInitd88696e2a4603cee166fc79f1fcedfd8
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd88696e2a4603cee166fc79f1fcedfd8::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd88696e2a4603cee166fc79f1fcedfd8::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitd88696e2a4603cee166fc79f1fcedfd8::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitd88696e2a4603cee166fc79f1fcedfd8::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit79c1e610e7a3545952eda4d8a53bcc8c::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit79c1e610e7a3545952eda4d8a53bcc8c::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit79c1e610e7a3545952eda4d8a53bcc8c::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit79c1e610e7a3545952eda4d8a53bcc8c::$classMap;
 
         }, null, ClassLoader::class);
     }

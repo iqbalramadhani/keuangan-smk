@@ -1,14 +1,5 @@
-RewriteEngine On
-#
-SetEnvIf Host www.XXXXX.net$ CI_ENV=production
-SetEnvIf Host test.XXXXX.tld$ CI_ENV=testing
-SetEnvIf Host localhost$ CI_ENV=development
-
-# Disable Directory Browsing
-Options All -Indexes
-
-# Delete index.php and .php in the url
-RewriteCond $1 !^(index\.php|(.*)\.swf|forums|images|css|downloads|jquery|js|robots\.txt|favicon\.ico)
+RewriteEngine on
+RewriteCond $1 !^(index\.php|resources|robots\.txt)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 [L,QSA]
