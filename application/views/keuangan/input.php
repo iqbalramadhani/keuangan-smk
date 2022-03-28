@@ -28,10 +28,11 @@
 								</button>
 							</div>
 						<?php } ?>
-						<button class="btn btn-primary btn-lg" id="tambah-data">Tambah Data</button>
+						<button class="btn btn-primary" id="tambah-data">Tambah Data</button>
+						<a href="<?= base_url('keuangan/export/'.$tgl) ?>" target="_blank" class="btn btn-primary">Export Excel</a>
 						<hr>
 						<?= form_open(base_url('keuangan/filter')) ?>
-						<label for="">Tanggal Laporan</label>
+						<label for="">Tanggal Bayar</label>
 						<br>
 						<input type="text" name="tanggal" id="tgl" class="form-control col-md-3">
 						<button class="btn btn-primary ml-3 filter"><i class="fa fa-search"></i></button>

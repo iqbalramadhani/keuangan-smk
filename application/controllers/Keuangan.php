@@ -1,5 +1,8 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Keuangan extends MY_Controller
 {
 
@@ -51,7 +54,7 @@ class Keuangan extends MY_Controller
 		$this->load->view('keuangan/index', get_defined_vars());
 	}
 
-	public function input()
+	public function input($tgl=null)
 	{
 		$this->title = 'Laporan Pembayaran';
 		$pembayaran = $this->keuangan->get_data()->result();
@@ -69,11 +72,11 @@ class Keuangan extends MY_Controller
 		$this->db->trans_begin();
 		$data = $this->input->post();
 		print_r($data);
-		if($data['tipe_check'] == 'import'){
+		if ($data['tipe_check'] == 'import') {
 			$spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($_FILES['file']['tmp_name']);
 			$excel = $spreadsheet->getSheet(0)->toArray();
 			unset($excel[0]);
-			foreach($excel as $exc){
+			foreach ($excel as $exc) {
 				$save[] = [
 					'kelas' => $data['kelas'],
 					'nama_siswa' => $exc[1],
@@ -85,7 +88,7 @@ class Keuangan extends MY_Controller
 					'created_by' => jwt()->id_user
 				];
 			}
-		}else{
+		} else {
 			$save = [];
 			foreach ($data['nis'] as $key => $val) {
 				$save[] = [
@@ -104,7 +107,7 @@ class Keuangan extends MY_Controller
 
 		$insert = $this->umum->multi_insert('pembayaran', $save);
 		if ($insert) {
-			$this->umum->insert('log_table',['id_log'=>date('dmYHis'),'jenis'=>'Input Pembayaran','pesan'=>'Input Pembayaran SPP']);
+			$this->umum->insert('log_table', ['id_log' => date('dmYHis'), 'jenis' => 'Input Pembayaran', 'pesan' => 'Input Pembayaran SPP']);
 			$this->session->set_flashdata('info', [true, 'Data berhasil disimpan']);
 			$this->db->trans_commit();
 		} else {
@@ -135,12 +138,61 @@ class Keuangan extends MY_Controller
 		}
 	}
 
-	public function filter(){
-		$filter = $this->input->post('tanggal');
-		$filter = explode('-',$filter);
-		$start = date('y-m-d',strtotime($filter[0]));
-		$end = date('y-m-d',strtotime($filter[1]));
-		$pembayaran = $this->keuangan->get_data(null,$start,$end)->result();
+	public function filter()
+	{
+		$tgl = $this->input->post('tanggal');
+		$filter = explode('-', $tgl);
+		$start = date('y-m-d', strtotime($filter[0]));
+		$end = date('y-m-d', strtotime($filter[1]));
+		$pembayaran = $this->keuangan->get_data(null, $start, $end)->result();
+		$tgl = encode_arr($tgl);
 		$this->render('input', get_defined_vars());
+	}
+
+	public function export($tanggal = null)
+	{
+		if (is_null($tanggal)) {
+			$pembayaran = $this->keuangan->get_data()->result();
+		} else {
+			$tgl = decode_arr($tanggal);
+			$filter = explode('-', $tgl);
+			$start = date('y-m-d', strtotime($filter[0]));
+			$end = date('y-m-d', strtotime($filter[1]));
+			$pembayaran = $this->keuangan->get_data(null, $start, $end)->result();
+		}
+
+
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
+		$sheet->mergeCells('A1:G1');
+		$sheet->setCellValue('A1', 'Laporan Pembayaran SPP');
+		$sheet->setCellValue('A4', 'No');
+		$sheet->setCellValue('B4', 'NIS');
+		$sheet->setCellValue('C4', 'Nama');
+		$sheet->setCellValue('D4', 'Kelas');
+		$sheet->setCellValue('E4', 'Bulan');
+		$sheet->setCellValue('F4', 'Tanggal Bayar');
+		$sheet->setCellValue('G4', 'Nominal');
+
+		$no = 1;
+		$x = 5;
+		foreach ($pembayaran as $row) {
+			$sheet->setCellValue('A' . $x, $no++);
+			$sheet->setCellValue('B' . $x, $row->nis);
+			$sheet->setCellValue('C' . $x, $row->nama_siswa);
+			$sheet->setCellValue('D' . $x, $row->kelas);
+			$sheet->setCellValue('E' . $x, bulanIndo($row->bulan));
+			$sheet->setCellValue('F' . $x, date('d-m-Y',strtotime($row->tanggal_bayar)));
+			$sheet->setCellValue('G' . $x, $row->nominal);
+			$x++;
+		}
+		$writer = new Xlsx($spreadsheet);
+		$filename = 'Laporan Pembayaran SPP Siswa';
+
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+		header('Cache-Control: max-age=0');
+
+		$writer->save('php://output');
 	}
 }

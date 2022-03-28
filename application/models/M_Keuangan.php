@@ -15,13 +15,14 @@ class M_Keuangan extends CI_Model
 		$this->db->join('kelas','pembayaran.kelas = kelas.id_kelas');
 		$this->db->join('jurusan','kelas.kode_jurusan = jurusan.kode_jurusan');
 		if(!is_null($data)){
-			$this->db->where('YEAR(pembayaran.tanggal_bayar)',date('Y'));
+			// $this->db->where('YEAR(pembayaran.tanggal_bayar)',date('Y'));
 			$this->db->where('LOWER(pembayaran.nama_siswa)',$data);
 			$this->db->or_where('pembayaran.nis',$data);
-		}
-		if(!is_null($start)){
+		}else if(!is_null($start)){
 			$this->db->where('pembayaran.tanggal_bayar >=',$start);
 			$this->db->where('pembayaran.tanggal_bayar <=',$end);
+		}else{
+			$this->db->where('DATE(pembayaran.created_at)',date('Y-m-d'));
 		}
 		return $this->db->get();
 	}
