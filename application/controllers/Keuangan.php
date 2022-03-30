@@ -119,7 +119,7 @@ class Keuangan extends MY_Controller
 
 	public function search($data)
 	{
-		$pembayaran = $this->keuangan->get_data(strtolower($data))->result();
+		$pembayaran = $this->keuangan->get_data(strtolower(base64_decode($data)))->result();
 		if (count($pembayaran) > 0) {
 			foreach ($pembayaran as $index => $pe) {
 				$pembayaran[$index]->tanggal_bayar = tgl_indo($pe->tanggal_bayar);

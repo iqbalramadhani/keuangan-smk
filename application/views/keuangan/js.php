@@ -12,7 +12,7 @@
         $('#add-button').click(function(){
             let table = `<tr id="row-${no}">
                 <td><input type="text" name="nama[]" class="form-control" required></td>
-                <td><input type="text" name="nis[]" class="form-control" required></td>
+                <td><input type="text" name="nis[]" class="form-control"></td>
                 <td><select name="bulan[]" id="" class="form-control">
                         <option value="1">Januari</option>
                         <option value="2">Februari</option>

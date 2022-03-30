@@ -56,6 +56,9 @@
 													<button type="submit" class="btn btn-primary" style="height: 40px;" id="search">Cari Data
 														<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 													</button>
+													<button onclick="window.location.href='<?= base_url(); ?>'" type="button" class="btn btn-primary" style="height: 40px;">
+														<span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+													</button>
 												</div>
 											</form>
 										</div>
@@ -157,7 +160,7 @@
 				let nis = $('#data-nis').val();
 
 				$.ajax({
-					url: base_url() + 'keuangan/search/' + nis,
+					url: base_url() + 'keuangan/search/' + btoa(nis),
 					method: 'GET',
 					dataType : 'JSON',
 					success: function(data) {
@@ -179,8 +182,6 @@
 							$('#spp-content').html(table);
 							$('#spp').show();
 						}else{
-							console.log('kurang')
-
 							$('#spp').hide();
 							$('#alert-nis').html(nis);
 							$('#alert-search').show();
@@ -190,36 +191,6 @@
 						console.log('error ' + xhr)
 					}
 				});
-
-				// $('#spp').hide();
-				// $('#alert-nis').html(nis);
-				// $('#alert-search').show();
-
-				
-				// $.each(data, function(key, val) {
-				// 	if (val.nis.toLowerCase() == nis.toLowerCase() || val.nama.toLowerCase() == nis.toLowerCase()) {
-				// 		let table = '';
-				// 		$('#spp-nama').html(val.nama);
-				// 		$('#spp-nis').html(val.nis);
-				// 		$('#spp-jurusan').html(val.jurusan);
-				// 		$('#spp-kelas').html(val.kelas);
-				// 		$.each(val.transaksi, function(keys, values) {
-				// 			table += `<tr>
-				// 				<td>${values.bulan}</td>
-				// 				<td>${values.tanggal_bayar}</td>
-				// 				<td>${values.nominal != '' ? 'Rp. '+values.nominal : '-'}</td>
-				// 				<td><span class="badge badge-${values.status == 'Belum Bayar' ? 'danger' : 'success'}">${values.status}</span></td>
-				// 			</tr>`
-				// 		});
-				// 		$('#spp-content').html(table);
-				// 		$('#spp').show();
-				// 		return false;
-				// 	}
-				// 	$('#spp').hide();
-				// 	$('#alert-nis').html(nis);
-				// 	$('#alert-search').show();
-				// });
-
 			});
 		});
 	</script>

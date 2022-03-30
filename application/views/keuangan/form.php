@@ -50,7 +50,7 @@
 										<thead>
 											<tr>
 												<th>Nama <span>*</span></th>
-												<th>NIS <span>*</span></th>
+												<th>NIS</th>
 												<th>Bulan</th>
 												<th>Tanggal Bayar</th>
 												<th colspan="2">Nominal</th>
@@ -59,7 +59,7 @@
 										<tbody id="table-data">
 											<tr id="row-1">
 												<td><input type="text" name="nama[]" class="form-control manual-required" required></td>
-												<td><input type="text" name="nis[]" class="form-control manual-required" required></td>
+												<td><input type="text" name="nis[]" class="form-control manual-required"></td>
 												<td>
 													<select name="bulan[]" id="" class="form-control">
 														<option value="1">Januari</option>
