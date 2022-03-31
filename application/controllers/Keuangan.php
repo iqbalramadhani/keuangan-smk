@@ -65,147 +65,165 @@ class Keuangan extends MY_Controller
 	public function form($id = null)
 	{
 		$kelas = $this->umum->get_data('kelas')->result();
-		$this->render('form', get_defined_vars());
+		if (!is_null($id)) {
+			$this->title = 'Laporan Pembayaran';
+			$pembayaran = $this->umum->get_where('pembayaran', ['id_pembayaran' => decode_arr($id)])->row();
+			$this->render('form_update', get_defined_vars());
+		} else {
+			$this->render('form', get_defined_vars());
+		}
 	}
 
 	public function save($id = null)
 	{
 		$this->db->trans_begin();
 		$data = $this->input->post();
-		if ($data['tipe_check'] == 'import') {
-			$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-			$reader->setReadDataOnly(true);
-			$spreadsheet = $reader->load($_FILES['file']['tmp_name']);
-			$activeSheet = $spreadsheet->getActiveSheet();
-			$excel = $spreadsheet->getSheet(0)->toArray();
-			unset($excel[0]);
-			$no=1;
-			$valid = false;
-			try {
-				foreach ($excel as $exc) {
-					if(empty($exc[2]) && empty($exc[1])){
-						continue;
-					}
+		$data['tanggal_bayar'] = date('Y-m-d',strtotime($data['tanggal_bayar']));
+		$data['nominal'] = str_replace('.','',$data['nominal']);
+		if (!is_null($id)) {
+			$save = $this->umum->update('pembayaran', $data, ['id_pembayaran' => decode_arr($id)]);
+			if ($save) {
+				$this->session->set_flashdata('info', [true, 'Data berhasil disimpan']);
+				$this->db->trans_commit();
+			} else {
+				$this->session->set_flashdata('info', [false, 'Data gagal disimpan']);
+				$this->db->trans_rollback();
+			}
+		} else {
+			if ($data['tipe_check'] == 'import') {
+				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+				$reader->setReadDataOnly(true);
+				$spreadsheet = $reader->load($_FILES['file']['tmp_name']);
+				$activeSheet = $spreadsheet->getActiveSheet();
+				$excel = $spreadsheet->getSheet(0)->toArray();
+				unset($excel[0]);
+				$no = 1;
+				$valid = false;
+				try {
+					foreach ($excel as $exc) {
+						if (empty($exc[2]) && empty($exc[1])) {
+							continue;
+						}
 
-					if(empty($exc[3])){
-						$this->session->set_flashdata('info',['warning','Kelas harus diisi pada baris no '.$no]);
-						$valid = true;
-						break;
-					}else{
-						$cek = $this->cek_kelas($exc[3]);
-						if(!$cek[0]){
-							$this->session->set_flashdata('info',['warning',$cek[1].' pada baris no '.$no]);
+						if (empty($exc[3])) {
+							$this->session->set_flashdata('info', ['warning', 'Kelas harus diisi pada baris no ' . $no]);
+							$valid = true;
+							break;
+						} else {
+							$cek = $this->cek_kelas($exc[3]);
+							if (!$cek[0]) {
+								$this->session->set_flashdata('info', ['warning', $cek[1] . ' pada baris no ' . $no]);
+								$valid = true;
+								break;
+							}
+						}
+
+						if (empty($exc[4])) {
+							$this->session->set_flashdata('info', ['warning', 'Tanggal Bayar Harus Diisi pada baris no ' . $no]);
+							$valid = true;
+							break;
+						} else if (is_string($exc[4])) {
+							$this->session->set_flashdata('info', ['warning', 'Format Tanggal Bayar Tidak Sesuai pada baris no ' . $no]);
 							$valid = true;
 							break;
 						}
-					}
 
-					if(empty($exc[4])){
-						$this->session->set_flashdata('info',['warning','Tanggal Bayar Harus Diisi pada baris no '.$no]);
-						$valid = true;
-						break;
-					}else if(is_string($exc[4])){
-						$this->session->set_flashdata('info',['warning','Format Tanggal Bayar Tidak Sesuai pada baris no '.$no]);
-						$valid = true;
-						break;
-					}
-
-					if(empty($exc[5])){
-						$this->session->set_flashdata('info',['warning','Nominal Bayar Harus Diisi pada baris no '.$no]);
-						$valid = true;
-						break;
-					}else if(is_string($exc[5])){
-						$this->session->set_flashdata('info',['warning','Format Nominal Bayar Tidak sesuai pada baris no '.$no]);
-						$valid = true;
-						break;
-					}
-
-					if(empty($exc[6])){
-						$this->session->set_flashdata('info',['warning','Bulan Bayar Harus Diisi pada baris no '.$no]);
-						$valid = true;
-						break;
-					}else{
-						$bulan = $this->cek_bulan($exc[6]);
-						if($bulan[0] == false){
-							$this->session->set_flashdata('info',['warning',$bulan[1].' pada baris no '.$no]);
+						if (empty($exc[5])) {
+							$this->session->set_flashdata('info', ['warning', 'Nominal Bayar Harus Diisi pada baris no ' . $no]);
 							$valid = true;
-							echo 'salah';
+							break;
+						} else if (is_string($exc[5])) {
+							$this->session->set_flashdata('info', ['warning', 'Format Nominal Bayar Tidak sesuai pada baris no ' . $no]);
+							$valid = true;
 							break;
 						}
-					}
 
+						if (empty($exc[6])) {
+							$this->session->set_flashdata('info', ['warning', 'Bulan Bayar Harus Diisi pada baris no ' . $no]);
+							$valid = true;
+							break;
+						} else {
+							$bulan = $this->cek_bulan($exc[6]);
+							if ($bulan[0] == false) {
+								$this->session->set_flashdata('info', ['warning', $bulan[1] . ' pada baris no ' . $no]);
+								$valid = true;
+								echo 'salah';
+								break;
+							}
+						}
+
+						$save[] = [
+							'kelas' => $cek,
+							'nama_siswa' => $exc[2],
+							'nis' => $exc[1],
+							'tanggal_bayar' => date('Y-m-d', \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($exc[4])),
+							'nominal' => $exc[5],
+							'bulan' => $bulan[1],
+							'created_at' => date('Y-m-d H:i:s'),
+							'created_by' => jwt()->id_user
+						];
+
+						$no++;
+					}
+				} catch (\Throwable $th) {
+					$this->session->set_flashdata('info', ['warning', $cek[1] . ' pada baris no ' . $no]);
+					$valid = true;
+				}
+
+				if ($valid) redirect('keuangan/form');
+			} else {
+				$save = [];
+				foreach ($data['nis'] as $key => $val) {
 					$save[] = [
-						'kelas' => $cek,
-						'nama_siswa' => $exc[2],
-						'nis' => $exc[1],
-						'tanggal_bayar' => date('Y-m-d', \PhpOffice\PhpSpreadsheet\Shared\Date::excelToTimestamp($exc[4])),
-						'nominal' => $exc[5],
-						'bulan' => $bulan[1],
+						'kelas' => $data['kelas'][$key],
+						'nama_siswa' => $data['nama'][$key],
+						'nis' => $val,
+						'tanggal_bayar' => date('Y-m-d', strtotime($data['tgl_bayar'][$key])),
+						'nominal' => str_replace(['.', ','], '', $data['nominal'][$key]),
+						'bulan' => $data['bulan'][$key],
 						'created_at' => date('Y-m-d H:i:s'),
 						'created_by' => jwt()->id_user
+
 					];
-	
-					$no++;
 				}
-			} catch (\Throwable $th) {
-				$this->session->set_flashdata('info',['warning',$cek[1].' pada baris no '.$no]);
-				$valid = true;
 			}
 
-			if($valid) redirect('keuangan/form');
-			
-
-		} else {
-			$save = [];
-			foreach ($data['nis'] as $key => $val) {
-				$save[] = [
-					'kelas' => $data['kelas'][$key],
-					'nama_siswa' => $data['nama'][$key],
-					'nis' => $val,
-					'tanggal_bayar' => date('Y-m-d', strtotime($data['tgl_bayar'][$key])),
-					'nominal' => str_replace(['.', ','], '', $data['nominal'][$key]),
-					'bulan' => $data['bulan'][$key],
-					'created_at' => date('Y-m-d H:i:s'),
-					'created_by' => jwt()->id_user
-
-				];
+			$insert = $this->umum->multi_insert('pembayaran', $save);
+			if ($insert) {
+				$this->umum->insert('log_table', ['id_log' => date('dmYHis'), 'jenis' => 'Input Pembayaran', 'pesan' => 'Input Pembayaran SPP']);
+				$this->session->set_flashdata('info', [true, 'Data berhasil disimpan']);
+				$this->db->trans_commit();
+			} else {
+				$this->session->set_flashdata('info', [false, 'Data gagal disimpan']);
+				$this->db->trans_rollback();
 			}
-		}
-
-		$insert = $this->umum->multi_insert('pembayaran', $save);
-		if ($insert) {
-			$this->umum->insert('log_table', ['id_log' => date('dmYHis'), 'jenis' => 'Input Pembayaran', 'pesan' => 'Input Pembayaran SPP']);
-			$this->session->set_flashdata('info', [true, 'Data berhasil disimpan']);
-			$this->db->trans_commit();
-		} else {
-			$this->session->set_flashdata('info', [false, 'Data gagal disimpan']);
-			$this->db->trans_rollback();
 		}
 		redirect('keuangan/input');
 	}
 
-	private function cek_kelas($kelas){
-		$kelas = str_replace(' ','',$kelas);
-		$kelas = explode('-',$kelas);
-		if(count($kelas) < 3){
-			return [false,'Format Kelas Tidak Sesuai'];
+	private function cek_kelas($kelas)
+	{
+		$kelas = str_replace(' ', '', $kelas);
+		$kelas = explode('-', $kelas);
+		if (count($kelas) < 3) {
+			return [false, 'Format Kelas Tidak Sesuai'];
 		}
-		$find_kelas = $this->umum->get_where('kelas',['tingkat'=>strtoupper($kelas[0]),'kode_jurusan'=>strtoupper($kelas[1]),'kelas'=>$kelas[2]]);
-		if($find_kelas->num_rows() > 0){
+		$find_kelas = $this->umum->get_where('kelas', ['tingkat' => strtoupper($kelas[0]), 'kode_jurusan' => strtoupper($kelas[1]), 'kelas' => $kelas[2]]);
+		if ($find_kelas->num_rows() > 0) {
 			return $find_kelas->row()->id_kelas;
-		}else{
-			return [false,'Data Kelas Tidak di temukan'];
+		} else {
+			return [false, 'Data Kelas Tidak di temukan'];
 		}
-
 	}
 
-	private function cek_bulan($bulan){
-		$bulan = str_replace([' '],'',$bulan);
+	private function cek_bulan($bulan)
+	{
+		$bulan = str_replace([' '], '', $bulan);
 		$index = idx_tgl_indo(strtolower($bulan));
-		if(!empty($index)){
-			return [true,$index];
-		}else{
-			return [false,'Bulan tidak sesuai'];
+		if (!empty($index)) {
+			return [true, $index];
+		} else {
+			return [false, 'Bulan tidak sesuai'];
 		}
 	}
 
@@ -288,8 +306,17 @@ class Keuangan extends MY_Controller
 		$writer->save('php://output');
 	}
 
-	static public function verifyDate($date)
+	public function hapus($id)
 	{
-		return DateTime::createFromFormat('m/d/Y', $date);
+		$this->db->trans_begin();
+		$delete = $this->umum->delete('pembayaran', ['id_pembayaran' => decode_arr($id)]);
+		if ($delete) {
+			$this->session->set_flashdata('info', [true, 'Data berhasil dihapus']);
+			$this->db->trans_commit();
+		} else {
+			$this->session->set_flashdata('info', [false, 'Data gagal dihapus']);
+			$this->db->trans_rollback();
+		}
+		redirect($this->module . '/input');
 	}
 }
