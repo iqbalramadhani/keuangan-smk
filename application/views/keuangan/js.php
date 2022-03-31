@@ -13,7 +13,15 @@
             let table = `<tr id="row-${no}">
                 <td><input type="text" name="nama[]" class="form-control" required></td>
                 <td><input type="text" name="nis[]" class="form-control"></td>
-                <td><select name="bulan[]" id="" class="form-control">
+                <td>
+                    <select name="kelas[]" class="form-control manual-required select2" required>
+                        <option value="">--Pilih Kelas--</option>
+                        <?php foreach ($kelas as $kelass) : ?>
+                            <option value="<?= $kelass->id_kelas ?>"><?= $kelass->tingkat . '-' . $kelass->kode_jurusan . '-' . $kelass->kelas ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </td>
+                <td><select name="bulan[]" id="" class="form-control select2">
                         <option value="1">Januari</option>
                         <option value="2">Februari</option>
                         <option value="3">Maret</option>
@@ -28,13 +36,14 @@
                         <option value="12">Desember</option>
                     </select>
                 </td>
-                <td><input type="text" name="tgl_bayar[]" class="form-control input-date" readonly required></td>
+                <td><input type="text" name="tgl_bayar[]" class="form-control input-date" onkeydown="return false;" required></td>
                 <td><input type="text" name="nominal[]" id="" class="form-control nominal"></td>
                 <td><button class="btn btn-danger hapus" data-row="row-${no}" type="button">Hapus</button> </td>
             </tr>`;
             no++;
             $('#table-data').append(table);
             $('.input-date').datepicker({format: 'dd-mm-yyyy'});
+            $('.select2').select2();
         });
 
         $(document).on('click','.hapus',function(){

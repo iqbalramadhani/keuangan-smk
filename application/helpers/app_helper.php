@@ -459,21 +459,21 @@ function tgl_indo($tanggal)
 function idx_tgl_indo($tgl)
 {
   $bulan = array(
-    'Januari'  => 1,
-    'Februari' => 2,
-    'Maret'    => 3,
-    'April'    => 4,
-    'Mei'      => 5,
-    'Juni'     => 6,
-    'Juli'     => 7,
-    'Agustus'  => 8,
-    'September'=> 9,
-    'Oktober'  => 10,
-    'November' => 11,
-    'Desember' => 12
+    'jan' => 1,
+    'feb' => 2,
+    'mar' => 3,
+    'apr' => 4,
+    'mei' => 5,
+    'jun' => 6,
+    'jul' => 7,
+    'agu' => 8,
+    'sep' => 9,
+    'okt' => 10,
+    'nov' => 11,
+    'des' => 12
   );
 
-  return $bulan[$tgl];
+  return $bulan[substr($tgl,0,3)];
 }
 
 function rupiah($nominal)

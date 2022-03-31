@@ -51,6 +51,7 @@
 										<th>Bulan</th>
 										<th>Tanggal Bayar</th>
 										<th>Nominal</th>
+										<th>Aksi</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -62,6 +63,10 @@
 											<td><?= bulanIndo($pe->bulan); ?></td>
 											<td><?= tgl_indo($pe->tanggal_bayar); ?></td>
 											<td><?= rupiah($pe->nominal); ?></td>
+											<td width="20%">
+												<a href="" class="btn btn-warning">Ubah</a>
+												<a href="" class="btn btn-danger">Hapus</a>
+											</td>
 										</tr>
 									<?php endforeach; ?>
 								</tbody>

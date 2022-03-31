@@ -15,6 +15,15 @@
         margin-top: 0px;
     }
 
+    .required {
+        color: red;
+        font-size: 20px;
+    }
+
+    .text-alert {
+        color: white;
+    }
+
 
 
     /* Small devices (landscape phones, 576px and up) */

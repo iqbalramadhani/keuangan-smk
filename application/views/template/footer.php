@@ -26,10 +26,13 @@
 
 		setTimeout(function() {
 			$('.alert').alert('close');
-		}, 5000);
+		}, 10000);
 
 		$(document).ready(function() {
 			$('#myTable').DataTable();
+
+    		$('.select2').select2();
+
 		});
 	</script>
 	</body>
