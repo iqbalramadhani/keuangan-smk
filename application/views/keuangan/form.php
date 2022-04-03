@@ -20,7 +20,7 @@
 					<div class="x_content">
 						<?php if (!empty($this->session->flashdata('info'))) { ?>
 							<div class="alert alert-<?= $this->session->flashdata('info')[0]; ?> alert-dismissible fade show" role="alert">
-								<span class="text-alert"><?= $this->session->flashdata('info')[1]; ?></span> 
+								<span class="text-alert"><?= $this->session->flashdata('info')[1]; ?></span>
 								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
@@ -99,8 +99,17 @@
 							</div>
 						</div>
 						<div class="input-form mt-3" id="import-excel" style="display: none;">
-							<label>File Excel<span>*</span> | Format : xls</label>
-							<input type="file" name="file" id="" class="form-control import-required">
+							<div class="row">
+								<div class="col-md">
+									<label>File Excel<span>*</span></label>
+									<input type="file" name="file" id="" class="form-control import-required">
+								</div>
+								<div class="col-md">
+									<label for="">Download Template</label><br>
+									<a href="<?= base_url('assets/Template Import Laporan Pembayaran.xlsx') ?>" class="btn btn-outline-info"><span class="glyphicon glyphicon-save" aria-hidden="true"></span>
+</a>
+								</div>
+							</div>
 						</div>
 						</form>
 					</div>
