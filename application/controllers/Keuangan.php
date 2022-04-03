@@ -79,6 +79,8 @@ class Keuangan extends MY_Controller
 		$this->db->trans_begin();
 		$data = $this->input->post();
 		if (!is_null($id)) {
+			$data['tanggal_bayar'] = date('Y-m-d', strtotime($data['tanggal_bayar']));
+			$data['nominal'] = str_replace('.', '', $data['nominal']);
 			$save = $this->umum->update('pembayaran', $data, ['id_pembayaran' => decode_arr($id)]);
 			if ($save) {
 				$this->session->set_flashdata('info', [true, 'Data berhasil disimpan']);
