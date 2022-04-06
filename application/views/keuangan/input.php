@@ -45,6 +45,7 @@
 							<table class="table mt-3 table-bordered" id="myTable">
 								<thead>
 									<tr>
+										<th width="5x">No</th>
 										<th>NIS</th>
 										<th>Nama</th>
 										<th>Kelas</th>
@@ -55,8 +56,12 @@
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach ($pembayaran as $pe) : ?>
+									<?php 
+									$no=1;
+									foreach ($pembayaran as $pe) : 
+									?>
 										<tr>
+											<td><?= $no++; ?></td>
 											<td><?= $pe->nis; ?></td>
 											<td><?= $pe->nama_siswa; ?></td>
 											<td><?= $pe->kelas; ?></td>

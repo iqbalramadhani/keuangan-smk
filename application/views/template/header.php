@@ -53,7 +53,7 @@
 							<img src="<?= base_url('assets/img/default-user.png') ?>" alt="..." class="img-circle profile_img">
 						</div>
 						<div class="profile_info">
-							<span>Welcome,</span>
+							<span>Selamat Datang,</span>
 							<h2>Admin</h2>
 						</div>
 						<div class="clearfix"></div>
@@ -99,7 +99,7 @@
 									<img src="<?= base_url('assets/img/default-user.png') ?>" alt="">Admin
 								</a>
 								<div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-									<a class="dropdown-item" href="javascript:;"> Profile</a>
+									<a class="dropdown-item" href="<?= base_url('dashboard/profile/'.jwt()->id_user); ?>"> Profile</a>
 									<a class="dropdown-item" href="<?= base_url('auth/logout'); ?>"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
 								</div>
 							</li>

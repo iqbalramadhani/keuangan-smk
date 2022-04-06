@@ -73,4 +73,8 @@ class Dashboard extends MY_Controller {
         $this->title = 'Form Data';
 		$this->render('form',get_defined_vars());
 	}
+
+	public function profile(){
+		$this->umum->get_where('user',['id_user'=>jwt()->id_user]);
+	}
 }
