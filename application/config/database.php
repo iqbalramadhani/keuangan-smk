@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'srv143.niagahoster.com',
-	'username' => 'u1653714_keuangan',
-	'password' => '&#w;Ouw73~5(',
-	'database' => 'u1653714_keuangan',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
+	'database' => 'keuangan_smk',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
