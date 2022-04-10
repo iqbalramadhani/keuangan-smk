@@ -41,7 +41,7 @@
 					<div class="x_content">
 						<button type="button" class="btn btn-primary" id="back" onclick="window.location.href = '<?= base_url('dashboard'); ?>'">Kembali</button>
 						<form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
-							<table class="table mt-3">
+							<table class="table mt-3" id="myTable">
 								<thead>
 									<th>Kelas</th>
 									<th>Pemasukan Hari Ini</th>
@@ -61,9 +61,6 @@
 									<?php endforeach; ?>
 								</tbody>
 							</table>
-
-							
-
 						</form>
 					</div>
 				</div>
@@ -71,6 +68,3 @@
 		</div>
 	</div>
 </div>
-<?php
-$this->load->view('dashboard/js.php');
-?>
