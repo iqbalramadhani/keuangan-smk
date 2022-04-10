@@ -36,19 +36,21 @@
 					<div class="x_content">
 						<div class="row">
 							<?php foreach ($data as $datas) : ?>
-								<div class="animated flipInY col-md-<?= $datas['id'] == 3 ? '12' : '4' ?>">
-									<div class="tile-stats bg-<?= $datas['id'] == 3 ? 'primary' : 'info' ?> text-white">
+								<div class="animated flipInY col-md-<?= $datas['id'] == 3 ? '12 text-center total-nominal' : '4' ?>">
+									<div class="tile-stats bg-info text-white">
 										<div class="count">
-											<h6><?= $datas['label']; ?></h6>
+											<h6 class="<?= $datas['id'] == 3 ? 'total-nominal' : ''?>"><?= $datas['label']; ?></h6>
 										</div>
-										<div class="money ml-2">Rp. <?= number_format($datas['nominal'], 0, '.', '.') ?></div>
-										<div class="detail-info">
-											<a href="" class="text-center">
-												<p class="more-detail">Info Lebih Lanjut
-													<i class="fa fa-arrow-circle-right"></i>
-												</p>
-											</a>
-										</div>
+										<div class="money ml-2 ">Rp. <?= number_format($datas['nominal'], 0, '.', '.') ?></div>
+										<?php if (in_array($datas['id'], [4, 5, 6])) { ?>
+											<div class="detail-info">
+												<a href="<?= base_url('dashboard/detail_pemasukan/'.$datas['tingkat']) ?>" class="text-center">
+													<p class="more-detail">Info Lebih Lanjut
+														<i class="fa fa-arrow-circle-right"></i>
+													</p>
+												</a>
+											</div>
+										<?php } ?>
 									</div>
 								</div>
 							<?php endforeach; ?>

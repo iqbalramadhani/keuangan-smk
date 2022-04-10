@@ -94,7 +94,6 @@ class Keuangan extends MY_Controller
 				$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 				$reader->setReadDataOnly(true);
 				$spreadsheet = $reader->load($_FILES['file']['tmp_name']);
-				$activeSheet = $spreadsheet->getActiveSheet();
 				$excel = $spreadsheet->getSheet(0)->toArray();
 				unset($excel[0]);
 				$no = 1;
@@ -171,6 +170,8 @@ class Keuangan extends MY_Controller
 				}
 
 				if ($valid) redirect('keuangan/form');
+
+				$pesan = 'Input Pembayaran SPP dari Excel';
 			} else {
 				$save = [];
 				foreach ($data['nis'] as $key => $val) {
@@ -186,11 +187,12 @@ class Keuangan extends MY_Controller
 
 					];
 				}
+				$pesan = 'Input Pembayaran SPP Manual';
 			}
 
 			$insert = $this->umum->multi_insert('pembayaran', $save);
 			if ($insert) {
-				$this->umum->insert('log_table', ['id_log' => date('dmYHis'), 'jenis' => 'Input Pembayaran', 'pesan' => 'Input Pembayaran SPP']);
+				$this->umum->insert('log_table', ['id_log' => date('dmYHis'), 'jenis' => 'Input Pembayaran', 'pesan' => $pesan]);
 				$this->session->set_flashdata('info', [true, 'Data berhasil disimpan']);
 				$this->db->trans_commit();
 			} else {

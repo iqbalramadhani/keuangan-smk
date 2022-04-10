@@ -29,23 +29,44 @@ class M_Keuangan extends CI_Model
 
 	public function pemasukan(){
 		return $this->db->query("
-			SELECT 0 as id,'Pemasukan Hari Ini' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
+			SELECT 0 as id,null AS tingkat,'Pemasukan Hari Ini' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
 			WHERE tanggal_bayar = '".date('Y-m-d')."' UNION
-			SELECT 1 as id,'Pemasukan Minggu Ini' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
+			SELECT 1 as id,null AS tingkat,'Pemasukan Minggu Ini' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
 			WHERE tanggal_bayar >= '".date('Y-m-d',strtotime('-6 days'))."'
 			UNION
-			SELECT 2 AS id,'Pemasukan Bulan Ini' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
-			WHERE MONTH(tanggal_bayar) = '".date('m')."'
+			SELECT 2 AS id,null AS tingkat,'Pemasukan Bulan Ini' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
+			WHERE MONTH(tanggal_bayar) = '".date('m')."' AND YEAR(tanggal_bayar) = '".date('Y')."'
 			UNION
-			SELECT 4 AS id,'Pemasukan Kelas X' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
+			SELECT 4 AS id,'X' AS tingkat,'Pemasukan Kelas X' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
 			WHERE kelas in (SELECT id_kelas FROM kelas WHERE tingkat = 'X')
 			UNION
-			SELECT 5 AS id,'Pemasukan Kelas XI' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
+			SELECT 5 AS id,'XI' AS tingkat,'Pemasukan Kelas XI' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
 			WHERE kelas in (SELECT id_kelas FROM kelas WHERE tingkat = 'XI')
 			UNION
-			SELECT 6 AS id,'Pemasukan Kelas XII' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
+			SELECT 6 AS id,'XII' AS tingkat,'Pemasukan Kelas XII' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
 			WHERE kelas in (SELECT id_kelas FROM kelas WHERE tingkat = 'XII')
 			UNION
-			SELECT 3 AS id,'Total Pemasukan' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran");
+			SELECT 3 AS id,null AS tingkat,'Total Pemasukan' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran");
+	}
+
+	public function pemasukan_detail($tingkat = null){
+		return $this->db->query("SELECT CONCAT(kelas.tingkat,'-',kelas.kode_jurusan,'-',kelas.kelas) AS kelasnya,
+		(SELECT COALESCE(SUM(pm.nominal),0)
+		FROM pembayaran as pm
+		JOIN kelas as ks ON ks.id_kelas = pm.kelas
+		WHERE ks.tingkat = '".$tingkat."' and ks.kode_jurusan = kelas.kode_jurusan and ks.kelas = kelas.kelas and pm.tanggal_bayar = '".date('Y-m-d')."') AS nominal_hariini,
+		(SELECT COALESCE(SUM(pm.nominal),0)
+		FROM pembayaran as pm
+		JOIN kelas as ks ON ks.id_kelas = pm.kelas
+		WHERE ks.tingkat = '".$tingkat."' and ks.kode_jurusan = kelas.kode_jurusan and ks.kelas = kelas.kelas and pm.tanggal_bayar >= '".date('Y-m-d',strtotime('-6 days'))."') AS nominal_minggu,
+		(SELECT COALESCE(SUM(pm.nominal),0)
+		FROM pembayaran as pm
+		JOIN kelas as ks ON ks.id_kelas = pm.kelas
+		WHERE ks.tingkat = '".$tingkat."' and ks.kode_jurusan = kelas.kode_jurusan and ks.kelas = kelas.kelas and MONTH(pm.tanggal_bayar) = '".date('m')."' AND YEAR(tanggal_bayar) = '".date('Y')."') AS nominal_bulan,
+		COALESCE(SUM(pembayaran.nominal),0) AS total_nominal
+		FROM pembayaran
+		JOIN kelas ON kelas.id_kelas = pembayaran.kelas
+		WHERE kelas.tingkat = '".$tingkat."'
+		GROUP BY kode_jurusan,kelas.kelas");
 	}
 }

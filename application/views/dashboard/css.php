@@ -21,4 +21,8 @@
         padding-top: -10px;
         z-index: 1;
     }
+
+    .total-nominal {
+        font-size: 30px;
+    }
 </style>

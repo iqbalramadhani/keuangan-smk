@@ -49,28 +49,6 @@ class Dashboard extends MY_Controller {
 	{
         $this->title = 'Dashboard';
 		$data = $this->keuangan->pemasukan()->result_array();
-		// $data = [
-		// 	[
-		// 		'key' => PEMASUKAN_HARI_INI,
-		// 		'label' => 'Pemasukan Hari Ini',
-		// 		'nominal' => $this->umum->get_where('pembayaran',['tanggal_bayar'=>date('Y-m-d')],'SUM(nominal) AS nominal')->row_array()['nominal'],
-		// 	],
-		// 	[
-		// 		'key' => PEMASUKAN_MINGGU_INI,
-		// 		'label' => 'Pemasukan Minggu Ini',
-		// 		'nominal' => $this->umum->get_where('pembayaran',['tanggal_bayar >= '=>date('Y-m-d',strtotime('-6 days'))],'SUM(nominal) AS nominal')->row_array()['nominal'],
-		// 	],
-		// 	[
-		// 		'key' => PEMASUKAN_BULAN_INI,
-		// 		'label' => 'Pemasukan Bulan Ini',
-		// 		'nominal' => $this->umum->get_where('pembayaran',['MONTH(tanggal_bayar)'=>date('m')],'SUM(nominal) AS nominal')->row_array()['nominal'],
-		// 	],
-		// 	[
-		// 		'key' => TOTAL_PEMASUKAN,
-		// 		'label' => 'Total Pemasukan',
-		// 		'nominal' => $this->umum->get_data('pembayaran','SUM(nominal) AS nominal')->row_array()['nominal']
-		// 	]
-		// ];
 		$this->render('index',get_defined_vars());
 	}
 	
@@ -87,6 +65,7 @@ class Dashboard extends MY_Controller {
 	}
 
 	public function detail_pemasukan($key){
+		$data = $this->keuangan->pemasukan_detail($key)->result_array();
 		$this->render('form',get_defined_vars());
 	}
 }
