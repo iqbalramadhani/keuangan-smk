@@ -46,7 +46,7 @@ class M_Keuangan extends CI_Model
 			SELECT 6 AS id,'XII' AS tingkat,'Pemasukan Kelas XII' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
 			WHERE kelas in (SELECT id_kelas FROM kelas WHERE tingkat = 'XII')
 			UNION
-			SELECT 3 AS id,null AS tingkat,'Total Pemasukan' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran");
+			SELECT 3 AS id,null AS tingkat,'Total Pemasukan' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran WHERE YEAR(tanggal_bayar) = '".date('Y')."'");
 	}
 
 	public function pemasukan_detail($tingkat = null){
@@ -66,7 +66,7 @@ class M_Keuangan extends CI_Model
 		COALESCE(SUM(pembayaran.nominal),0) AS total_nominal
 		FROM pembayaran
 		JOIN kelas ON kelas.id_kelas = pembayaran.kelas
-		WHERE kelas.tingkat = '".$tingkat."'
+		WHERE kelas.tingkat = '".$tingkat."' AND YEAR(pembayaran.tanggal_bayar) = '".date('Y')."'
 		GROUP BY kode_jurusan,kelas.kelas");
 	}
 }
