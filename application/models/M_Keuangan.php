@@ -27,4 +27,25 @@ class M_Keuangan extends CI_Model
 		return $this->db->get();
 	}
 
+	public function pemasukan(){
+		return $this->db->query("
+			SELECT 0 as id,'Pemasukan Hari Ini' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
+			WHERE tanggal_bayar = '".date('Y-m-d')."' UNION
+			SELECT 1 as id,'Pemasukan Minggu Ini' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
+			WHERE tanggal_bayar >= '".date('Y-m-d',strtotime('-6 days'))."'
+			UNION
+			SELECT 2 AS id,'Pemasukan Bulan Ini' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
+			WHERE MONTH(tanggal_bayar) = '".date('m')."'
+			UNION
+			SELECT 4 AS id,'Pemasukan Kelas X' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
+			WHERE kelas in (SELECT id_kelas FROM kelas WHERE tingkat = 'X')
+			UNION
+			SELECT 5 AS id,'Pemasukan Kelas XI' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
+			WHERE kelas in (SELECT id_kelas FROM kelas WHERE tingkat = 'XI')
+			UNION
+			SELECT 6 AS id,'Pemasukan Kelas XII' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran
+			WHERE kelas in (SELECT id_kelas FROM kelas WHERE tingkat = 'XII')
+			UNION
+			SELECT 3 AS id,'Total Pemasukan' AS label,COALESCE(SUM(nominal),0) as nominal FROM pembayaran");
+	}
 }

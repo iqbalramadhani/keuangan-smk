@@ -85,3 +85,7 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 define('PUBLIC_KEY_JWT',"ASRT!@&JK)(!@@KLMNb[19tpr");
+define('PEMASUKAN_HARI_INI',0);
+define('PEMASUKAN_MINGGU_INI',1);
+define('PEMASUKAN_BULAN_INI',2);
+define('TOTAL_PEMASUKAN',3);

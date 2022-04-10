@@ -34,32 +34,36 @@
 						<div class="clearfix"></div>
 					</div>
 					<div class="x_content">
+						<?= form_open(base_url($module . '/save/'),array('class' => 'form-horizontal form-label-left')) ?>
 						<div class="row">
-							<?php foreach ($data as $datas) : ?>
-								<div class="animated flipInY col-md-<?= $datas['id'] == 3 ? '12' : '4' ?>">
-									<div class="tile-stats bg-<?= $datas['id'] == 3 ? 'primary' : 'info' ?> text-white">
-										<div class="count">
-											<h6><?= $datas['label']; ?></h6>
-										</div>
-										<div class="money ml-2">Rp. <?= number_format($datas['nominal'], 0, '.', '.') ?></div>
-										<div class="detail-info">
-											<a href="" class="text-center">
-												<p class="more-detail">Info Lebih Lanjut
-													<i class="fa fa-arrow-circle-right"></i>
-												</p>
-											</a>
-										</div>
+							<div class="col-md-3">
+								<img id="uploadPreview" src="<?= base_url('assets/img/default-user.png') ?>" class="mb-3" alt="profile" width="100%" height="70%">
+								<input type="file" name="img-profile" id="uploadImage"  onchange="PreviewImage();" class="form-control">
+							</div>
+							<div class="col-md-6">
+								<div class="item form-group">
+									<label class="col-form-label col-md-3 col-sm-3 label-align" for="first-name">Nama <span class="required">*</span>
+									</label>
+									<div class="col-md-6 col-sm-6 ">
+										<input type="text" value="<?= $profile->nama_lengkap; ?>" id="first-name" required="required" class="form-control ">
 									</div>
 								</div>
-							<?php endforeach; ?>
-
+								
+							</div>
 						</div>
+
+						<div class="ln_solid"></div>
+						<div class="item form-group">
+							<div class="col-md-6 col-sm-6 offset-md-3">
+								<button class="btn btn-primary" type="button">Cancel</button>
+								<button class="btn btn-primary" type="reset">Reset</button>
+								<button type="submit" class="btn btn-success">Submit</button>
+							</div>
+						</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<?php
-$this->load->view('dashboard/js.php');
-?>
